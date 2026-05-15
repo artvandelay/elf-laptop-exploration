@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*.so
+
+.DS_Store
+.env
+.venv/
+venv/
+
+# Local laptop experiments: datasets, checkpoints, logs, and generations.
+data/
+outputs/
+wandb/
+
+# Large checkpoint artifacts if copied elsewhere.
+checkpoint_*/
+*.ckpt
+*.safetensors
+*.pt
+*.pth
+
+# Local scratch files.
+*.log
+tmp/

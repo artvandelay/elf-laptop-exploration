@@ -1,8 +1,81 @@
-# ELF: Embedded Language Flows
+# ELF Laptop Exploration
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.10938-b31b1b.svg)](https://arxiv.org/abs/2605.10938)&nbsp;
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)&nbsp;
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-ELF-blue.svg)](https://huggingface.co/embedded-language-flows)&nbsp;
+
+This repository is a credited, laptop-scale exploration of the official JAX implementation for the paper *ELF: Embedded Language Flows*. It keeps the upstream ELF code and citation intact, then adds a tiny TinyStories training path, CPU-friendly dependencies, analysis utilities, and an interactive terminal sampler for probing whether the implementation works end-to-end on a laptop.
+
+The main conclusion from this exploration is narrow but useful: the local path is a working research sandbox, not a high-quality language model. We verified data preparation, CPU/JAX training, checkpointing, evaluation, sampling, and interactive inspection on a tiny `ELF-T` model trained on a small TinyStories slice.
+
+## What This Exploration Adds
+
+- `requirements-cpu.txt` for a CPU/JAX laptop environment.
+- `scripts/prepare_tinystories.py` to create a small local TinyStories T5-tokenized dataset.
+- `src/configs/training_configs/train_tinystories_ELF-T.yml` and `src/configs/sampling_configs/laptop_sampling_configs.yml` for a tiny `ELF-T` run.
+- `ELF-T` and `ELF-XS` model factory variants in `src/modules/model.py`.
+- `scripts/analyze_generations.py` for quick generation-quality signals such as distinct token ratios and adjacent repetition.
+- `src/interact.py` for an interactive terminal sampler with debug/runtime statistics.
+- `docs/EXPERIMENT_TIMELINE.md`, `docs/RESULTS.md`, `CREDITS.md`, and `ai_process_disclosure/ai_collaboration_timeline.md` for provenance, credit, and experiment history.
+
+Large local artifacts are intentionally not versioned. Regenerate datasets and checkpoints locally with the commands below.
+
+## Quickstart: Laptop Sandbox
+
+Create the environment outside the repo:
+
+```bash
+uv venv ~/pyenv/elf-laptop --python 3.11
+source ~/pyenv/elf-laptop/bin/activate
+uv pip install -r requirements-cpu.txt
+```
+
+Prepare a tiny TinyStories slice:
+
+```bash
+python scripts/prepare_tinystories.py --n_train 2000 --n_eval 64 --max_length 64
+```
+
+Train the tiny model:
+
+```bash
+cd src
+python train.py --config configs/training_configs/train_tinystories_ELF-T.yml
+```
+
+Evaluate or sample from a checkpoint:
+
+```bash
+python eval.py \
+  --config configs/training_configs/train_tinystories_ELF-T.yml \
+  --checkpoint_path ../outputs/elf_t-tinystories/checkpoint_5000 \
+  --use_cpu
+```
+
+Interact with the trained checkpoint:
+
+```bash
+python interact.py \
+  --config ../outputs/elf_t-tinystories-stage3-20e/config.yml \
+  --checkpoint_path ../outputs/elf_t-tinystories-stage3-20e/checkpoint_5000 \
+  --quiet_jax
+```
+
+The interactive checkpoint used in this exploration is unconditional. Typed prompts are recorded in the session log for your notes, but they do not condition generation unless you train or load a conditional checkpoint.
+
+## Experiment Status
+
+The confirmed end-to-end run used `ELF-T`, TinyStories, `max_length=64`, batch size 8, 20 epochs, and 5,000 training steps on CPU. Final logged training values were `loss=0.9338`, `l2=0.7588`, `ce=1.6337`, with generation completing successfully from `checkpoint_5000`.
+
+See `docs/RESULTS.md` for interpretation and `docs/EXPERIMENT_TIMELINE.md` for the step-by-step history.
+
+## Upstream Project
+
+The text below is the original upstream README content from the ELF implementation, retained for context and citation.
+
+---
+
+# ELF: Embedded Language Flows
 
 This is the official JAX implementation for the paper *ELF: Embedded Language Flows*. This code is written and tested on TPUs. A PyTorch version will be released soon.
 
