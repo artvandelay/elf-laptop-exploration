@@ -16,7 +16,7 @@ The main conclusion from this exploration is narrow but useful: the local path i
 - `ELF-T` and `ELF-XS` model factory variants in `src/modules/model.py`.
 - `scripts/analyze_generations.py` for quick generation-quality signals such as distinct token ratios and adjacent repetition.
 - `src/interact.py` for an interactive terminal sampler with debug/runtime statistics.
-- `docs/EXPERIMENT_TIMELINE.md`, `docs/RESULTS.md`, `CREDITS.md`, and `ai_process_disclosure/ai_collaboration_timeline.md` for provenance, credit, and experiment history.
+- `docs/EXPERIMENT_TIMELINE.md`, `docs/RESULTS.md`, and `CREDITS.md` for provenance, credit, and experiment history.
 
 Large local artifacts are intentionally not versioned. Regenerate datasets and checkpoints locally with the commands below.
 

@@ -32,17 +32,4 @@ The laptop exploration added:
 - Laptop training and sampling configs.
 - Generation analysis script.
 - Interactive terminal sampler.
-- Experiment results, timeline, and AI collaboration disclosure docs.
-
-## AI Assistance Disclosure
-
-Cursor agent sessions were used to:
-
-- Download and inspect the paper/source materials.
-- Explain the ELF training loop and code path.
-- Clone the upstream repository.
-- Configure and run laptop-scale TinyStories experiments.
-- Add analysis and interactive sampling utilities.
-- Prepare this provenance and publication package.
-
-See `ai_process_disclosure/ai_collaboration_timeline.md` for the source-order collaboration log and synthesized timeline.
+- Experiment results and timeline docs.
