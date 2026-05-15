@@ -158,10 +158,13 @@ class ELF(nn.Module):
 
 
 # Model factory functions
+def ELF_T(**kwargs): return ELF(depth=4,  hidden_size=128,  num_heads=4,  **kwargs)
+def ELF_XS(**kwargs): return ELF(depth=6,  hidden_size=256,  num_heads=4,  **kwargs)
 def ELF_B(**kwargs): return ELF(depth=12, hidden_size=768,  num_heads=12, **kwargs)
 def ELF_M(**kwargs): return ELF(depth=24, hidden_size=1056, num_heads=16, **kwargs)
 def ELF_L(**kwargs): return ELF(depth=32, hidden_size=1280, num_heads=16, **kwargs)
 
 ELF_models = {
+    'ELF-T': ELF_T, 'ELF-XS': ELF_XS,
     'ELF-B': ELF_B, 'ELF-M': ELF_M, 'ELF-L': ELF_L,
 }
